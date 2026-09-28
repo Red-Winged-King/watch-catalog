@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>G-SHOCK Archive</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="noise"></div>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">G</span><span><b>G-SHOCK</b><small>PRIVATE ARCHIVE</small></span></a>
+  <nav>
+    <button class="ghost" id="browseBtn">Catalog</button>
+    <a class="ghost linkbtn" href="dropship.html">Dropship Lab</a>
+    <a class="ghost linkbtn" href="decoder.html">Decoder</a>
+    <button class="bag-btn" id="bagBtn"><span>Bag</span><b id="bagCount">0</b></button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">CURATED G-SHOCK CATALOG</div>
+      <h1>Browse the archive.<br><em>Inspect every detail.</em></h1>
+      <p>G-SHOCK models and diamond / moissanite covers only. No pricing, checkout, or sale flow — this is a private catalog and selection builder.</p>
+      <button class="primary" id="enterCatalog">Explore collection</button>
+    </div>
+    <div class="hero-panel">
+      <div class="hero-card"><span>592</span><small>catalog entries</small></div>
+      <div class="hero-card"><span>18</span><small>source pages</small></div>
+      <div class="hero-card"><span>∞</span><small>zoom detail</small></div>
+    </div>
+  </section>
+
+  <section class="catalog-shell" id="catalog">
+    <div class="catalog-head">
+      <div><div class="eyebrow">THE ARCHIVE</div><h2>Catalog</h2></div>
+      <div class="controls">
+        <label class="search"><span>⌕</span><input id="search" placeholder="Search item #, model, catalog…"></label>
+        <select id="sort"><option value="source">Catalog order</option><option value="model">Model A–Z</option><option value="page">Source page</option></select>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="result-row"><span id="resultCount">0 items</span><button class="text-btn" id="clearFilters">Clear filters</button></div>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<aside class="drawer" id="bagDrawer" aria-hidden="true">
+  <div class="drawer-head"><div><small>PRIVATE SELECTION</small><h3>Your bag</h3></div><button class="iconbtn" id="closeBag">×</button></div>
+  <div class="bag-list" id="bagList"></div>
+  <div class="bag-empty" id="bagEmpty"><b>Your bag is empty.</b><span>Add any catalog item to generate a portable selection code.</span></div>
+  <div class="bag-code-wrap" id="bagCodeWrap">
+    <label>Selection code</label>
+    <textarea id="bagCode" readonly></textarea>
+    <div class="code-actions"><button class="primary small" id="copyCode">Copy code</button><a class="secondary small" href="decoder.html">Open decoder</a></div>
+    <p>The code stores each item ID and quantity. Paste it into the decoder to rebuild the bag.</p>
+  </div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<div class="modal" id="zoomModal" aria-hidden="true">
+  <button class="modal-close" id="closeModal">×</button>
+  <div class="zoom-stage" id="zoomStage">
+    <div class="zoom-canvas" id="zoomCanvas"><img id="zoomImg" alt="Catalog detail"></div>
+  </div>
+  <div class="modal-info">
+    <div><small id="zoomMeta"></small><h3 id="zoomTitle"></h3><p id="zoomSub"></p></div>
+    <div class="modal-actions"><button class="secondary" id="zoomOut">−</button><span id="zoomPct">100%</span><button class="secondary" id="zoomIn">+</button><button class="primary" id="modalAdd">Add to bag</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
