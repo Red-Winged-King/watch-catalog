@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>G-SHOCK Archive</title>
-<link rel="stylesheet" href="styles.css?v=20260929" />
+<link rel="stylesheet" href="styles.css?v=20260929b" />
 </head>
 <body>
 <div class="noise"></div>
@@ -12,7 +12,6 @@
   <a class="brand" href="#"><span class="brand-mark">G</span><span><b>G-SHOCK</b><small>PRIVATE ARCHIVE</small></span></a>
   <nav>
     <button class="ghost" id="browseBtn">Catalog</button>
-    <a class="ghost linkbtn" href="dropship.html">Dropship Lab</a>
     <a class="ghost linkbtn" href="decoder.html">Decoder</a>
     <button class="bag-btn" id="bagBtn"><span>Bag</span><b id="bagCount">0</b></button>
   </nav>
@@ -23,7 +22,7 @@
     <div class="hero-copy">
       <div class="eyebrow">CURATED G-SHOCK CATALOG</div>
       <h1>Browse the archive.<br><em>Inspect every detail.</em></h1>
-      <p>G-SHOCK models and diamond / moissanite covers only. No pricing, checkout, or sale flow — this is a private catalog and selection builder.</p>
+      <p>Browse G-SHOCK models and diamond / moissanite covers, inspect each item, and build a portable selection.</p>
       <button class="primary" id="enterCatalog">Explore collection</button>
     </div>
     <div class="hero-panel">
@@ -52,25 +51,10 @@
   <div class="bag-list" id="bagList"></div>
   <div class="bag-empty" id="bagEmpty"><b>Your bag is empty.</b><span>Add any catalog item to generate a portable selection code.</span></div>
   <div class="bag-code-wrap" id="bagCodeWrap">
-    <section class="bag-order-guide" id="bagOrderGuide" aria-live="polite">
-      <div class="bag-order-icon" aria-hidden="true">&#10003;</div>
-      <div>
-        <span class="bag-order-kicker" id="bagOrderKicker">NEXT STEP · GET YOUR PRICE</span>
-        <h4 id="bagOrderTitle">Get your price &amp; place your order</h4>
-        <p id="bagOrderText">Use this code to price the order, then give the final code to your supplier for fulfillment.</p>
-        <ol class="bag-fulfillment-steps">
-          <li><b>Copy the BAG1 code.</b> Open the Price Calculator and import it.</li>
-          <li><b>Review the order.</b> Adjust quantities, check the estimate, then copy the updated BAG1 code.</li>
-          <li><b>Send it to your supplier.</b> Include the updated code, delivery name, full shipping address, phone/contact details, and any order notes.</li>
-          <li><b>Confirm before payment.</b> Ask the supplier to confirm stock, final total, shipping cost, and delivery details.</li>
-        </ol>
-      </div>
-      <a class="bag-calculator-cta" href="https://red-winged-king.github.io/bulk-placements/" target="_blank" rel="noopener">Open Price Calculator <span aria-hidden="true">→</span></a>
-    </section>
     <label>Selection code</label>
     <textarea id="bagCode" readonly></textarea>
     <div class="code-actions"><button class="primary small" id="copyCode">Copy code</button><a class="secondary small" href="decoder.html">Open decoder</a></div>
-    <p class="bag-code-help">Your BAG1 code stores every selected item and quantity. Your bag stays saved on this device.</p>
+    <p class="bag-code-help">This BAG1 code stores every selected item and quantity. Your bag stays saved on this device.</p>
   </div>
 </aside>
 <div class="scrim" id="scrim"></div>
@@ -87,6 +71,6 @@
 </div>
 
 <div class="toast" id="toast"></div>
-<script src="app.js?v=20260929"></script>
+<script src="app.js?v=20260929b"></script>
 </body>
 </html>
