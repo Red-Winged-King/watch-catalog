@@ -2,7 +2,6 @@ const $ = s => document.querySelector(s);
 let catalog = [], filtered = [], active = 'All';
 let bag = JSON.parse(localStorage.getItem('gshockBag') || '{}');
 let current = null, zoom = 1, fitZoom = 1;
-let bagCodeCopied = false;
 
 const grid = $('#grid');
 const chips = $('#chips');
@@ -12,7 +11,7 @@ const sort = $('#sort');
 function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400)}
 function bagQty(){return Object.values(bag).reduce((a,b)=>a+b,0)}
-function save(){bagCodeCopied=false;localStorage.setItem('gshockBag',JSON.stringify(bag));renderBag()}
+function save(){localStorage.setItem('gshockBag',JSON.stringify(bag));renderBag()}
 function encodeBag(){const entries=Object.entries(bag).filter(([,q])=>q>0).map(([id,q])=>{const item=catalog.find(x=>x.id===id);return [item?item.sku:id,q]});const payload=JSON.stringify({v:1,items:entries});const bytes=new TextEncoder().encode(payload);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return 'BAG1.'+btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
 
 function getThumb(item){return item.thumb || item.image}
@@ -107,19 +106,6 @@ function renderBag(){
       <button class="remove">Remove</button>
     </div>`).join('');
   if(entries.length) $('#bagCode').value = encodeBag();
-  updateBagOrderGuide();
-}
-
-function updateBagOrderGuide(){
-  const guide=$('#bagOrderGuide');
-  if(!guide) return;
-  guide.classList.toggle('copied',bagCodeCopied);
-  $('#bagOrderKicker').textContent=bagCodeCopied?'CODE COPIED · NEXT STEP':'NEXT STEP · GET YOUR PRICE';
-  $('#bagOrderTitle').textContent=bagCodeCopied?'Code copied — get your price':'Get your price & place your order';
-  $('#bagOrderText').textContent=bagCodeCopied
-    ?'Open the Price Calculator and import the code. Review the estimate, copy the updated code, then send it with your delivery details to your supplier for fulfillment.'
-    :'Use this code to price the order, then give the final code to your supplier for fulfillment.';
-  $('#copyCode').textContent=bagCodeCopied?'Code copied ✓':'Copy code';
 }
 
 $('#bagList').onclick = e => {
@@ -140,10 +126,7 @@ function closeBag(){$('#bagDrawer').classList.remove('open');$('#scrim').classLi
 $('#bagBtn').onclick=openBag;$('#closeBag').onclick=closeBag;$('#scrim').onclick=closeBag;
 $('#copyCode').onclick=async()=>{
   await navigator.clipboard.writeText($('#bagCode').value);
-  bagCodeCopied=true;
-  updateBagOrderGuide();
-  $('#bagOrderGuide').scrollIntoView({behavior:'smooth',block:'nearest'});
-  toast('Code copied — open the calculator for your price');
+  toast('Selection code copied');
 };
 
 function configureViewer(){
