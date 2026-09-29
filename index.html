@@ -52,10 +52,19 @@
   <div class="bag-list" id="bagList"></div>
   <div class="bag-empty" id="bagEmpty"><b>Your bag is empty.</b><span>Add any catalog item to generate a portable selection code.</span></div>
   <div class="bag-code-wrap" id="bagCodeWrap">
+    <section class="bag-order-guide" id="bagOrderGuide" aria-live="polite">
+      <div class="bag-order-icon" aria-hidden="true">&#10003;</div>
+      <div>
+        <span class="bag-order-kicker" id="bagOrderKicker">NEXT STEP · GET YOUR PRICE</span>
+        <h4 id="bagOrderTitle">Get your price &amp; place your order</h4>
+        <p id="bagOrderText">Copy your BAG1 code, paste it into the Price Calculator for your estimate, then send the same code to your supplier when you are ready to buy.</p>
+      </div>
+      <a class="bag-calculator-cta" href="bulk/" target="_blank" rel="noopener">Open Price Calculator <span aria-hidden="true">→</span></a>
+    </section>
     <label>Selection code</label>
     <textarea id="bagCode" readonly></textarea>
     <div class="code-actions"><button class="primary small" id="copyCode">Copy code</button><a class="secondary small" href="decoder.html">Open decoder</a></div>
-    <p>The code stores each item ID and quantity. Paste it into the decoder to rebuild the bag.</p>
+    <p class="bag-code-help">Your BAG1 code stores every selected item and quantity. Your bag stays saved on this device.</p>
   </div>
 </aside>
 <div class="scrim" id="scrim"></div>
