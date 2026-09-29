@@ -117,8 +117,8 @@ function updateBagOrderGuide(){
   $('#bagOrderKicker').textContent=bagCodeCopied?'CODE COPIED · NEXT STEP':'NEXT STEP · GET YOUR PRICE';
   $('#bagOrderTitle').textContent=bagCodeCopied?'Code copied — get your price':'Get your price & place your order';
   $('#bagOrderText').textContent=bagCodeCopied
-    ?'Open the Price Calculator, paste your code, and import it. Review your estimate, then send the same code to your supplier to place the order.'
-    :'Copy your BAG1 code, paste it into the Price Calculator for your estimate, then send the same code to your supplier when you are ready to buy.';
+    ?'Open the Price Calculator and import the code. Review the estimate, copy the updated code, then send it with your delivery details to your supplier for fulfillment.'
+    :'Use this code to price the order, then give the final code to your supplier for fulfillment.';
   $('#copyCode').textContent=bagCodeCopied?'Code copied ✓':'Copy code';
 }
 
