@@ -32,3 +32,16 @@
 
 .bag-code-help{margin-bottom:0}.code-actions>*{flex:1;text-align:center}.code-actions .primary{min-width:0}
 @media(max-width:520px){.bag-code-wrap{padding:14px 14px 16px}.code-actions{flex-direction:column}.code-actions>*{width:100%}}
+
+/* Series artwork is navigation-only: product cards retain their exact catalog imagery. */
+.chips{display:grid;grid-auto-flow:column;grid-auto-columns:184px;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:28px 2px 18px;scrollbar-width:thin;scrollbar-color:#4a402e transparent}
+.chip{scroll-snap-align:start;white-space:normal;border:1px solid var(--line);background:#101216;color:#b9bcc1;border-radius:16px;padding:8px;min-height:218px;display:grid;grid-template-rows:1fr auto;gap:9px;align-items:center;text-align:left;font-size:12px;font-weight:700;line-height:1.25;cursor:pointer;overflow:hidden;transition:border-color .18s,background .18s,transform .18s,box-shadow .18s}
+.chip:hover{border-color:#5f5138;background:#15140f;transform:translateY(-2px)}
+.chip:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.chip img,.chip-all-mark{width:100%;aspect-ratio:1;display:block;border-radius:11px}
+.chip img{object-fit:cover;background:#0b0c0e}
+.chip>span:last-child{padding:0 3px 2px}
+.chip-all-mark{display:grid;place-items:center;background:radial-gradient(circle at 25% 20%,rgba(216,189,130,.26),transparent 35%),linear-gradient(145deg,#1d1a13,#0b0d10);color:var(--gold2);font:600 30px/1 Georgia,serif;letter-spacing:.12em;border:1px solid #3c3528}
+.chip.active{border-color:#c1a66e;background:#1b1710;color:#f4dfb2;box-shadow:0 0 0 1px rgba(216,189,130,.16),0 12px 30px rgba(0,0,0,.28)}
+.chip.active img,.chip.active .chip-all-mark{box-shadow:0 0 0 2px rgba(216,189,130,.48)}
+@media(max-width:760px){.chips{grid-auto-columns:132px;gap:9px;padding:22px 0 14px}.chip{min-height:164px;border-radius:14px;padding:6px;font-size:10px;gap:7px}.chip img,.chip-all-mark{border-radius:9px}.chip-all-mark{font-size:23px}}

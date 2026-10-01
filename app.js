@@ -8,6 +8,34 @@ const chips = $('#chips');
 const search = $('#search');
 const sort = $('#sort');
 
+const CATEGORY_ICONS = {
+  'GA2100': '01-ga2100.png',
+  'GA2100 Summer': '02-ga2100-summer.png',
+  'Diamond / Moissanite Covers': '03-diamond-moissanite-covers.png',
+  'GM2100': '04-gm2100.png',
+  'GM2100 A-Series': '05-gm2100-a-series.png',
+  'GM2100 Steel Strip': '06-gm2100-steel-strip.png',
+  'GA2100-AP': '07-ga2100-ap.png',
+  'GM2100-AP': '08-gm2100-ap.png',
+  'AW500': '09-aw500.png',
+  'GA900': '10-ga900.png',
+  'DW6900': '11-dw6900.png',
+  'GA110 Series': '12-ga110-series.png',
+  'B001 Series': '13-b001-series.png',
+  'Baby-G': '14-baby-g.png',
+  'G-7900': '15-g-7900.png',
+  'GA-V01': '16-ga-v01.png',
+  'GA700': '17-ga700.png',
+  'GD-B500': '18-gd-b500.png',
+  'GA100': '19-ga100.png',
+  'GA-2300': '20-ga-2300.png',
+  'GMW-B5000': '21-gmw-b5000.png',
+  'Square Digital Series': '22-square-digital-series.png',
+  'B400': '23-b400.png',
+  'D012 Series': '24-d012-series.png',
+  'N-Series': '25-n-series.png'
+};
+
 function esc(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400)}
 function bagQty(){return Object.values(bag).reduce((a,b)=>a+b,0)}
@@ -28,7 +56,12 @@ function imageMarkup(item, cls=''){
 
 function renderChips(){
   const cats=['All',...new Set(catalog.map(x=>x.category))];
-  chips.innerHTML = cats.map(c=>`<button class="chip ${c===active?'active':''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  chips.innerHTML = cats.map(c=>{
+    const visual = c === 'All'
+      ? '<span class="chip-all-mark" aria-hidden="true">ALL</span>'
+      : `<img src="assets/series-icons/${CATEGORY_ICONS[c]}" alt="${esc(c)} category" loading="lazy" decoding="async">`;
+    return `<button class="chip ${c===active?'active':''}" data-cat="${esc(c)}" aria-pressed="${c===active}">${visual}<span>${esc(c)}</span></button>`;
+  }).join('');
   chips.onclick = e => {
     const b = e.target.closest('.chip');
     if(!b) return;
