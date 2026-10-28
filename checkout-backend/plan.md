@@ -87,6 +87,8 @@ Suggested folders:
 
 Protected project secrets hold app credentials and seller refresh credentials; they must never be embedded in frontend files, GitHub, build output or logs. Session connector credentials are verified but are not automatically provisioned into a published backend. Use the project's protected input form, with the existing eBay connection offered as a reuse source. Store any database-held OAuth credentials encrypted with an application-specific protected key. Protect seller controls with authenticated owner access and validate OAuth state/callbacks; buyers should not have to log into this application.
 
+The confirmed published callback is https://watchbuy-ko4chrlv.manus.space/api/ebay/callback, with an explicit server-environment override only for a separately configured custom domain. Owner onboarding includes an owner-only browser-crypto control that copies a fresh 32-byte base64 token-encryption key directly to the clipboard for the protected input card. The key is never rendered into the DOM, logged, sent through chat or persisted in browser storage; an existing configured key must not be regenerated. This reduces manual setup without changing the separate-key encryption design.
+
 Use rate limits, bounded cart quantities, canonical SKU lookup, inventory validation, a daily listing cap and server-side prices. Never accept a client-supplied price, seller account, arbitrary eBay endpoint, listing description or expiry time. A copied BAG1 code is untrusted SKU/quantity input, not a payment authorization.
 
 ## Build, release and production boundaries

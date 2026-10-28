@@ -1,3 +1,4 @@
+import { ebayCallbackUrl } from '../ebay/config.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { DEFAULT_SETTINGS, type Product, type Settings, type SoldReference, type Draft, type Checkout, type SellerConnection, type ScheduleBinding, type CartLine } from '../contracts.js';
@@ -35,7 +36,7 @@ export async function readiness(store: Store, settings?: Settings): Promise<{rea
     {key:'signing',label:'Runtime session and checkout signing',ok:Boolean(process.env.MANUS_JWT_SECRET && process.env.MANUS_PROJECT_ID),detail:'Platform signing credentials must be available before publication or buyer status-token creation.'},
     {key:'owner',label:'Owner account configured',ok:Boolean(process.env.ADMIN_OPEN_ID),detail:'Pin ADMIN_OPEN_ID to the signed-in owner; no public self-enrolment.'},
     {key:'app',label:'eBay app credentials in deployed environment',ok:Boolean(process.env.EBAY_CLIENT_ID && process.env.EBAY_CLIENT_SECRET),detail:'Use protected project settings; connector keys alone do not grant seller access.'},
-    {key:'oauth',label:'Seller OAuth and encryption configuration',ok:Boolean(process.env.EBAY_RUNAME && process.env.EBAY_CALLBACK_URL && process.env.TOKEN_ENCRYPTION_KEY),detail:'Registered eBay callback/RuName and 32-byte base64 encryption key required.'},
+    {key:'oauth',label:'Seller OAuth and encryption configuration',ok:Boolean(process.env.EBAY_RUNAME && ebayCallbackUrl() && process.env.TOKEN_ENCRYPTION_KEY),detail:'Registered eBay callback/RuName and 32-byte base64 encryption key required.'},
     {key:'seller',label:'Authorized eBay seller',ok:Boolean(seller),detail:seller ? `Connected: ${seller.sellerName}` : 'Connect your seller account through the official eBay consent page.'},
     {key:'policies',label:'Listing policies and US shipping',ok:Boolean(config.paymentPolicyId && config.fulfillmentPolicyId && config.returnPolicyId && config.merchantLocationKey && config.shippingConfirmed && config.freeShippingPolicyConfirmed && config.shippingTiers.length),detail:'Confirmed combined supplier shipping and matching zero-extra-charge US delivery policy required.'},
     {key:'schedule',label:'Durable expiry scheduler healthy',ok:Boolean(schedule?.enabled && !schedule.lastError && last && Date.now()-last < 180000),detail:schedule?.lastSuccessAt ? `Last authenticated sweep: ${schedule.lastSuccessAt}` : 'Publish, register the one-minute schedule, bind its task UID and verify an authenticated run.'},

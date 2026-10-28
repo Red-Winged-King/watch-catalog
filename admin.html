@@ -83,6 +83,12 @@
         <div class="control-card">
           <div class="eyebrow">SELLER AUTHORIZATION</div><h2>eBay seller connection</h2>
           <p id="sellerStatus">Loading seller connection status…</p>
+          <p>In your eBay Production RuName settings, the <strong>Accepted URL</strong> must be <code>https://watchbuy-ko4chrlv.manus.space/api/ebay/callback</code>. If that RuName is used by another app, create a separate redirect entry rather than breaking its callback.</p>
+          <div id="encryptionSetup">
+            <p>First-time setup: copy a new encryption key below, then paste it into the protected <strong>TOKEN_ENCRYPTION_KEY</strong> input card. Do not paste it in chat. Do not replace an existing key after seller connection.</p>
+            <button class="primary" id="copyEncryptionKey" type="button">Copy new encryption key</button>
+            <span class="form-status" id="encryptionStatus" role="status"></span>
+          </div>
           <button class="primary" id="connectSeller" type="button">Connect eBay seller</button>
         </div>
         <div class="control-card">
@@ -105,6 +111,6 @@
 
   <footer class="site-footer"><span>Owner controls require the server-configured ADMIN_OPEN_ID and a protected session.</span><span><a href="index.html">Return to public archive</a></span></footer>
   <script src="commerce-config.js?v=20261028"></script>
-  <script src="admin.js?v=20261028"></script>
+  <script src="admin.js?v=20261028-owner-setup"></script>
 </body>
 </html>

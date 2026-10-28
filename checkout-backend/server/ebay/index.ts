@@ -1,3 +1,4 @@
+import { ebayCallbackUrl } from './config.js';
 import { createCipheriv, createDecipheriv, randomBytes } from 'node:crypto';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import type { ListingPayload, SaleEvidence, SellerConnection, Settings } from '../contracts.js';
@@ -633,7 +634,7 @@ function readConfig(): EbayConfig {
   const clientId = process.env.EBAY_CLIENT_ID;
   const clientSecret = process.env.EBAY_CLIENT_SECRET;
   const ruName = process.env.EBAY_RUNAME;
-  const callbackUrl = process.env.EBAY_CALLBACK_URL;
+  const callbackUrl = ebayCallbackUrl();
   const keyValue = process.env.TOKEN_ENCRYPTION_KEY;
   if (
     !isNonEmptyString(clientId) ||

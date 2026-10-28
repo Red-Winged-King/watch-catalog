@@ -1,3 +1,4 @@
+import { ebayCallbackUrl } from '../ebay/config.js';
 import { Router } from 'express';
 import { randomBytes } from 'node:crypto';
 import { HttpError, withStore, withLifecycleLock } from '../store.js';
@@ -15,7 +16,7 @@ export function adminRouter(ebay: EbayClient):Router {
       const data=await context(store);const seller=await store.get<SellerConnection>('config','seller');const schedule=await store.get<ScheduleBinding>('config','schedule');
       const checkouts=await store.list<Checkout>('checkouts');const events=await store.list<{type:string;count:number}>('events');
       const totals:Record<string,number>={};for(const event of events)totals[event.type]=(totals[event.type]||0)+event.count;
-      return {...data,drafts:await store.list<Draft>('drafts'),checkouts,readiness:await readiness(store,data.settings),seller:{connected:Boolean(seller),sellerName:seller?.sellerName},schedule,metrics:{events:totals,verifiedSales:checkouts.filter(c=>c.state==='COMMITTED'&&c.saleEvidence?.committed).length}};
+      return {...data,drafts:await store.list<Draft>('drafts'),checkouts,readiness:await readiness(store,data.settings),seller:{connected:Boolean(seller),sellerName:seller?.sellerName},encryptionKeyConfigured:Boolean(process.env.TOKEN_ENCRYPTION_KEY),schedule,metrics:{events:totals,verifiedSales:checkouts.filter(c=>c.state==='COMMITTED'&&c.saleEvidence?.committed).length}};
     });res.json(result);
   });
   router.put('/api/admin/settings',async(req,res)=>{
@@ -46,8 +47,8 @@ export function adminRouter(ebay: EbayClient):Router {
   });
   router.post('/api/admin/ebay/connect',async(req,res)=>{
     const owner=await requireAdmin(req,true);requireOrigin(req);
-    const callback=process.env.EBAY_CALLBACK_URL;
-    if(!callback||!callback.startsWith('https://')||!process.env.TOKEN_ENCRYPTION_KEY)throw new HttpError(409,'OAUTH_SETUP','Configure EBAY_RUNAME, EBAY_CALLBACK_URL and TOKEN_ENCRYPTION_KEY in protected settings first');
+    const callback=ebayCallbackUrl();
+    if(!callback||!callback.startsWith('https://')||!process.env.TOKEN_ENCRYPTION_KEY)throw new HttpError(409,'OAUTH_SETUP','Configure the Production RuName and token-encryption key, and register the displayed callback in eBay first');
     const nonce=randomBytes(32).toString('base64url');
     await withLifecycleLock(store=>store.put('oauth',nonce,{provider:'ebay',owner:owner.openId,expiresAt:Date.now()+600000,callback}));
     setEbayNonce(res,nonce);res.json({url:ebay.authorizationUrl(nonce)});
@@ -58,7 +59,7 @@ export function adminRouter(ebay: EbayClient):Router {
     if(!nonce||req.query.state!==nonce||typeof req.query.code!=='string')throw new HttpError(400,'OAUTH_STATE','Seller connection expired or browser cookies are blocked');
     await withLifecycleLock(async store=>{
       const record=await store.get<{owner:string;provider:string;expiresAt:number;callback:string}>('oauth',nonce);
-      if(!record||record.provider!=='ebay'||record.owner!==owner.openId||record.expiresAt<Date.now()||record.callback!==process.env.EBAY_CALLBACK_URL)throw new HttpError(400,'OAUTH_STATE','Seller connection expired');
+      if(!record||record.provider!=='ebay'||record.owner!==owner.openId||record.expiresAt<Date.now()||record.callback!==ebayCallbackUrl())throw new HttpError(400,'OAUTH_STATE','Seller connection expired');
       await store.remove('oauth',nonce);
       const connection=await ebay.exchangeCode(String(req.query.code));
       const existing=await store.get<SellerConnection>('config','seller');

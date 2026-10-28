@@ -1,6 +1,6 @@
 # eBay adapter notes
 
-`EbayClient` is a server-only Production adapter. Construction does no I/O. Its OAuth credentials come only from `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `EBAY_RUNAME`, `EBAY_CALLBACK_URL`, and a base64-encoded 32-byte `TOKEN_ENCRYPTION_KEY`; neither access nor refresh tokens are logged or returned from module methods.
+`EbayClient` is a server-only Production adapter. Construction does no I/O. Its OAuth credentials come only from `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `EBAY_RUNAME`, an optional `EBAY_CALLBACK_URL` custom-domain override, and a base64-encoded 32-byte `TOKEN_ENCRYPTION_KEY`; neither access nor refresh tokens are logged or returned from module methods.
 
 The seller consent URL requests `sell.inventory`, `sell.account.readonly`, `sell.fulfillment.readonly`, `commerce.identity.readonly`, and eBay's base OAuth scope for the read-only Trading XML calls. Code exchange posts form data to `POST https://api.ebay.com/identity/v1/oauth2/token` using the documented Basic client authentication. eBay's documented code-grant token response has no `scope` member, so the encrypted connection persists the exact requested consent set when that optional member is absent; if it is present, all required scopes must be included. The client calls `GET https://apiz.ebay.com/commerce/identity/v1/user/` with the User token before encrypting the refresh token as `v1.iv.tag.ciphertext` using AES-256-GCM. The short-lived access-token cache is in memory and keyed to the stored seller ID.
 
@@ -19,3 +19,5 @@ Sale evidence calls only read endpoints: Trading XML `GetItem` for exact listing
 - [eBay Fulfillment API OpenAPI](https://developer.ebay.com/develop/api/spec/fulfillment_api.json) documents `getOrders` creation-date filtering, `limit`/`offset` pagination, `orderPaymentStatus`, `legacyItemId`, SKU, and line-item quantity.
 - [eBay GetItemTransactions reference](https://developer.ebay.com/devzone/xml/docs/reference/ebay/getitemtransactions.html) documents XML pagination, `HasMoreTransactions`, `Item.SellingStatus.QuantitySold`, and `Transaction.QuantityPurchased`.
 - [eBay OAuth with Traditional APIs](https://developer.ebay.com/api-docs/static/oauth-trad-apis.html) documents use of OAuth User tokens for Traditional APIs and the requirement to request all scopes needed by the called methods.
+
+The verified default OAuth Accepted URL is https://watchbuy-ko4chrlv.manus.space/api/ebay/callback. The owner dashboard can copy a fresh 32-byte base64 encryption key directly from browser cryptographic randomness to the clipboard for protected initial input. The key is never rendered, logged or transmitted to an application API, and that control is hidden once a key is configured.

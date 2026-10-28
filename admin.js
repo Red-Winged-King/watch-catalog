@@ -220,6 +220,7 @@ function renderDashboard(data) {
   renderMetrics(data.metrics);
   renderCheckouts(data.checkouts);
   renderSeller(data.seller);
+  $('#encryptionSetup').hidden = Boolean(data.encryptionKeyConfigured);
   renderSchedule(data.schedule);
 }
 
@@ -428,6 +429,25 @@ async function connectSeller() {
   }
 }
 
+async function copyNewEncryptionKey() {
+  const button = $('#copyEncryptionKey');
+  button.disabled = true;
+  try {
+    if (!state.me?.authenticated || !state.me?.isAdmin) throw new Error('Sign in as the configured owner first.');
+    if (state.dashboard?.encryptionKeyConfigured) throw new Error('An encryption key is already configured. Do not replace it during normal setup.');
+    if (!window.isSecureContext || !crypto?.getRandomValues || !navigator.clipboard?.writeText) throw new Error('Open the HTTPS owner dashboard in a standalone tab and allow clipboard access.');
+    const bytes = crypto.getRandomValues(new Uint8Array(32));
+    try {
+      const encoded = btoa(String.fromCharCode(...bytes));
+      await navigator.clipboard.writeText(encoded);
+    } finally { bytes.fill(0); }
+    setStatus('#encryptionStatus', 'New key copied. Paste it into the protected TOKEN_ENCRYPTION_KEY card—not chat. The key is not shown or saved in this page.', 'success');
+  } catch (error) {
+    setStatus('#encryptionStatus', error.message || 'The key could not be copied. Retry in a standalone HTTPS tab.', 'error');
+    button.disabled = false;
+  }
+}
+
 async function saveSchedule() {
   setStatus('#scheduleStatus', 'Saving schedule binding…');
   try {
@@ -469,6 +489,7 @@ function bindEvents() {
     if (event.target.closest('#approveDraft')) approveDraft();
   });
   $('#connectSeller').addEventListener('click', connectSeller);
+  $('#copyEncryptionKey').addEventListener('click', copyNewEncryptionKey);
   $('#saveSchedule').addEventListener('click', saveSchedule);
   bindFileInput('#productFile', '#productsInput', 'Product');
   bindFileInput('#referenceFile', '#referencesInput', 'Product Research');
