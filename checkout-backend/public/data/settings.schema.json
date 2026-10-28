@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Settings",
+  "description": "Schema reference only. The owner dashboard submits a complete Settings object to the protected endpoint. This file contains no seller identifiers, policies, shipping prices, or live configuration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["marketplaceId", "currency", "liveEnabled", "paymentPolicyId", "fulfillmentPolicyId", "returnPolicyId", "merchantLocationKey", "shippingCountry", "shippingOriginCountry", "shippingSummary", "returnsSummary", "handlingDays", "shippingConfirmed", "freeShippingPolicyConfirmed", "packageWeightGrams", "shippingTiers", "maxCartUnits", "maxDailyListings", "maxDailyListingFeesCents", "maxReferenceAgeDays", "bundleAspects"],
+  "properties": {
+    "marketplaceId": {"const": "EBAY_US"},
+    "currency": {"const": "USD"},
+    "liveEnabled": {"type": "boolean", "default": false},
+    "paymentPolicyId": {"type": "string"},
+    "fulfillmentPolicyId": {"type": "string"},
+    "returnPolicyId": {"type": "string"},
+    "merchantLocationKey": {"type": "string"},
+    "shippingCountry": {"const": "US"},
+    "shippingOriginCountry": {"type": "string"},
+    "shippingSummary": {"type": "string"},
+    "returnsSummary": {"type": "string"},
+    "handlingDays": {"type": "integer", "minimum": 0},
+    "shippingConfirmed": {"type": "boolean"},
+    "freeShippingPolicyConfirmed": {"type": "boolean"},
+    "packageWeightGrams": {"type": "integer", "minimum": 0},
+    "shippingTiers": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["maxGrams", "costCents"], "properties": {"maxGrams": {"type": "integer", "minimum": 0}, "costCents": {"type": "integer", "minimum": 0}}}},
+    "maxCartUnits": {"type": "integer", "minimum": 1},
+    "maxDailyListings": {"type": "integer", "minimum": 0},
+    "maxDailyListingFeesCents": {"type": "integer", "minimum": 0},
+    "maxReferenceAgeDays": {"type": "integer", "minimum": 0},
+    "bundleAspects": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}}
+  }
+}
