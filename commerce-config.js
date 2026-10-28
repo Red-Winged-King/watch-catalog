@@ -4,4 +4,4 @@
  * published HTTPS backend origin (for example, https://checkout.example.com).
  * Never put credentials, seller tokens, or private costs in this file.
  */
-window.WATCH_CHECKOUT_API_ORIGIN = window.WATCH_CHECKOUT_API_ORIGIN || '';
+window.WATCH_CHECKOUT_API_ORIGIN = window.WATCH_CHECKOUT_API_ORIGIN || 'https://watchbuy-ko4chrlv.manus.space';

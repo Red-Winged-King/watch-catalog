@@ -5,8 +5,9 @@ import { HttpError, withLifecycleLock } from '../store.js';
 
 export const SESSION_COOKIE = 'webdev_app_session';
 const PREVIEW_ORIGIN = 'https://8328-i6qg3l1q41cuwjesdgqt4-c66b0a30.us5.manus.computer';
+const PUBLISHED_ORIGIN = 'https://watchbuy-ko4chrlv.manus.space';
 export function allowedOrigins(): Set<string> {
-  return new Set([PREVIEW_ORIGIN, 'https://red-winged-king.github.io', ...String(process.env.APP_PUBLIC_ORIGIN || '').split(',').filter(Boolean)]);
+  return new Set([PREVIEW_ORIGIN, PUBLISHED_ORIGIN, 'https://red-winged-king.github.io', ...String(process.env.APP_PUBLIC_ORIGIN || '').split(',').filter(Boolean)]);
 }
 export function cookies(req: Request): Record<string, string> {
   return Object.fromEntries(String(req.headers.cookie || '').split(';').map(x => x.trim().split(/=(.*)/s)).filter(x => x.length >= 2).map(([k,v]) => [k, decodeURIComponent(v)]));

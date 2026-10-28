@@ -2,7 +2,7 @@
 
 This build is an implemented bridge, not a live eBay seller launch. Keep liveEnabled false until the following dependencies are real and verified.
 
-First, the owner signs into the real Manus owner dashboard, obtains their own authenticated Open ID and pins ADMIN_OPEN_ID in protected project settings. Supply the Production app credentials through the protected project input surface, reusing the saved eBay connector where offered. Configure the deployed APP_PUBLIC_ORIGIN; never send the public GitHub storefront to an ephemeral Preview API URL.
+First, the owner signs into the real Manus owner dashboard, obtains their own authenticated Open ID and pins ADMIN_OPEN_ID in protected project settings. Supply the Production app credentials through the protected project input surface, reusing the saved eBay connector where offered. The published origin https://watchbuy-ko4chrlv.manus.space is explicitly allowlisted; an additional custom domain needs APP_PUBLIC_ORIGIN. Never send the public GitHub storefront to an ephemeral Preview API URL.
 
 Second, publish the companion backend to obtain its permanent HTTPS origin, register the exact eBay /api/ebay/callback URL and RuName, provision a 32-byte base64 TOKEN_ENCRYPTION_KEY, then authorize the seller using official eBay OAuth. Confirm actual seller policies and location. App credentials alone cannot create listings for a seller.
 

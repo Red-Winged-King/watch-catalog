@@ -12,7 +12,7 @@ The storefront is available in Preview. `/admin.html` is the owner dashboard. No
 
 The dashboard uses real Manus account login with `webdev_app_session`, HS256 project validation and CSRF protection. The owner must be explicitly pinned through protected project settings as `ADMIN_OPEN_ID`. Sign in first: the dashboard can show the authenticated account's own Open ID even before owner privileges are configured. Copy that ID into the protected setting. There is no first-visitor owner claim, fake Preview user, or customer-account requirement.
 
-Allow the actual companion backend HTTPS origin in `APP_PUBLIC_ORIGIN` for deployed owner login and browser API calls. The current managed Preview origin and the existing GitHub Pages origin are allowlisted for development. Update Preview-origin configuration if the sandbox Preview address changes; it is not the published backend URL. The callback uses the browser's actual origin, never an internal request Host.
+The published companion origin https://watchbuy-ko4chrlv.manus.space is explicitly allowlisted for owner login and browser API calls, alongside the current managed Preview and existing GitHub Pages origin. Use `APP_PUBLIC_ORIGIN` only to add an actual additional custom-domain origin. Update Preview-origin configuration if the sandbox Preview address changes; it is not the published backend URL. The callback uses the browser's actual origin, never an internal request Host.
 
 ## eBay protected setup
 
