@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Product import array",
+  "description": "Schema reference only. Submit a JSON array of confirmed records to the protected import endpoint. This file contains no products or commercial values.",
+  "type": "array",
+  "examples": [],
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["sku", "title", "model", "variant", "brand", "kind", "condition", "supplierCostCents", "weightGrams", "stock", "categoryId", "description", "imageUrls", "aspects", "supplierConfirmed", "authenticConfirmed", "fulfillmentAgreementConfirmed", "enabled", "updatedAt"],
+    "properties": {
+      "sku": {"type": "string", "description": "Must match an existing public catalog SKU."},
+      "title": {"type": "string"},
+      "model": {"type": "string", "description": "Exact model, not a family approximation."},
+      "variant": {"type": "string", "description": "Exact variant."},
+      "brand": {"type": "string"},
+      "kind": {"enum": ["watch", "accessory"]},
+      "condition": {"enum": ["NEW", "USED_EXCELLENT", "USED_GOOD"]},
+      "supplierCostCents": {"type": "integer", "minimum": 0},
+      "weightGrams": {"type": "integer", "minimum": 0},
+      "stock": {"type": "integer", "minimum": 0},
+      "accessoryMarginCents": {"type": "integer", "minimum": 0},
+      "categoryId": {"type": "string"},
+      "description": {"type": "string"},
+      "imageUrls": {"type": "array", "items": {"type": "string", "format": "uri"}},
+      "aspects": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+      "compatibility": {"type": "string"},
+      "supplierConfirmed": {"type": "boolean"},
+      "authenticConfirmed": {"type": "boolean"},
+      "fulfillmentAgreementConfirmed": {"type": "boolean"},
+      "enabled": {"type": "boolean"},
+      "updatedAt": {"type": "string", "format": "date-time"}
+    }
+  }
+}

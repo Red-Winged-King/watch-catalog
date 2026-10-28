@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>G-SHOCK Archive · Owner Operations</title>
+  <link rel="stylesheet" href="styles.css?v=20261028-commerce" />
+  <link rel="stylesheet" href="admin.css?v=20261028" />
+</head>
+<body class="admin-page">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar admin-topbar">
+    <a class="brand" href="index.html" aria-label="Return to G-SHOCK archive"><span class="brand-mark">G</span><span><b>G-SHOCK</b><small>OWNER OPERATIONS</small></span></a>
+    <nav aria-label="Owner navigation"><a class="ghost linkbtn" href="index.html">Catalog</a><button class="ghost" id="logoutBtn" type="button" hidden>Log out</button></nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-intro">
+      <div class="eyebrow">INTERNAL CONTROL ROOM</div>
+      <h1>Readiness before publication.</h1>
+      <p>Review verified operational data, exact listing drafts, and seller controls. Drafting and approval never publish a seller listing by themselves.</p>
+    </section>
+
+    <section class="admin-auth-panel" id="authPanel" aria-live="polite">
+      <div class="panel-kicker">AUTHORIZATION</div>
+      <h2 id="authTitle">Checking owner access…</h2>
+      <p id="authMessage">Contacting the protected server session.</p>
+      <dl class="identity-list" id="identityList" hidden></dl>
+      <div class="inline-actions"><button class="primary" id="loginBtn" type="button" hidden>Sign in with Manus</button><button class="secondary" id="authRetryBtn" type="button">Retry</button></div>
+    </section>
+
+    <section class="admin-dashboard" id="dashboard" hidden>
+      <div class="dashboard-status" id="dashboardStatus" role="status" aria-live="polite"></div>
+
+      <section class="admin-section readiness-section" aria-labelledby="readinessTitle">
+        <div class="section-heading"><div><div class="eyebrow">LIVE READINESS</div><h2 id="readinessTitle">Seller and checkout gates</h2></div><span class="readiness-mark" id="readinessMark">Loading</span></div>
+        <p class="operational-note">Live mode cannot override missing seller, policy, product, approval, or scheduler prerequisites. No seller listing is published while you are building a draft.</p>
+        <ul class="checklist" id="readinessChecklist"></ul>
+      </section>
+
+      <section class="admin-section" aria-labelledby="settingsTitle">
+        <div class="section-heading"><div><div class="eyebrow">CONFIGURATION</div><h2 id="settingsTitle">Marketplace settings</h2></div></div>
+        <p>Submit the complete settings object, including US shipping tiers, eBay policy IDs, return and shipping summaries, operational limits, and <code>liveEnabled</code>. Defaults remain off until server prerequisites are met.</p>
+        <p class="template-links"><a href="data/settings.schema.json" download>Full Settings schema reference</a></p>
+        <textarea class="json-editor" id="settingsInput" spellcheck="false" aria-label="Full settings JSON"></textarea>
+        <div class="inline-actions"><button class="primary" id="saveSettings" type="button">Save settings</button><span class="form-status" id="settingsStatus" role="status"></span></div>
+      </section>
+
+      <section class="admin-section admin-split" aria-label="Product and research imports">
+        <div class="import-card">
+          <div class="eyebrow">VERIFIED PRODUCTS</div><h2>Product JSON import</h2>
+          <p>Import a JSON array of confirmed supplier mappings matched to existing catalog SKUs. No costs, stock, or item facts are inferred by this dashboard.</p>
+          <p class="template-links"><a href="data/products-import-empty.json" download>Empty import array</a><a href="data/products.schema.json" download>Exact schema template</a></p>
+          <input class="file-input" id="productFile" type="file" accept="application/json,.json" aria-label="Load product JSON file">
+          <textarea class="json-editor compact" id="productsInput" spellcheck="false" placeholder="[]" aria-label="Products JSON array"></textarea>
+          <div class="inline-actions"><button class="primary" id="importProducts" type="button">Validate and import products</button><span class="form-status" id="productsStatus" role="status"></span></div>
+        </div>
+        <div class="import-card">
+          <div class="eyebrow">ACTUAL SOLD HISTORY</div><h2>Product Research JSON import</h2>
+          <p>Import only exact eBay Product Research sold-price evidence with its 90-day window, sample metadata, condition, and comparable confirmation. Asking prices are not accepted.</p>
+          <p class="template-links"><a href="data/sold-references-import-empty.json" download>Empty import array</a><a href="data/sold-references.schema.json" download>Exact schema template</a></p>
+          <input class="file-input" id="referenceFile" type="file" accept="application/json,.json" aria-label="Load Product Research JSON file">
+          <textarea class="json-editor compact" id="referencesInput" spellcheck="false" placeholder="[]" aria-label="Product Research JSON array"></textarea>
+          <div class="inline-actions"><button class="primary" id="importReferences" type="button">Validate and import references</button><span class="form-status" id="referencesStatus" role="status"></span></div>
+        </div>
+      </section>
+
+      <section class="admin-section" aria-labelledby="draftTitle">
+        <div class="section-heading"><div><div class="eyebrow">EXACT OFFER REVIEW</div><h2 id="draftTitle">Draft basket builder</h2></div></div>
+        <p>Enter an existing catalog SKU and bounded quantity. The server returns the exact quote and listing payload to review; creating a draft does not mutate eBay.</p>
+        <div class="draft-lines" id="draftLines"></div>
+        <div class="inline-actions"><button class="secondary" id="addDraftLine" type="button">Add SKU line</button><button class="primary" id="buildDraft" type="button">Build exact draft</button><span class="form-status" id="draftStatus" role="status"></span></div>
+        <div class="draft-result" id="draftResult" hidden></div>
+      </section>
+
+      <section class="admin-section" aria-labelledby="existingDraftsTitle">
+        <div class="section-heading"><div><div class="eyebrow">SAVED CONTEXTS</div><h2 id="existingDraftsTitle">Current drafts</h2></div></div>
+        <div id="draftsList" class="details-list"></div>
+      </section>
+
+      <section class="admin-section admin-split" aria-label="Seller and scheduler controls">
+        <div class="control-card">
+          <div class="eyebrow">SELLER AUTHORIZATION</div><h2>eBay seller connection</h2>
+          <p id="sellerStatus">Loading seller connection status…</p>
+          <p>In your eBay Production RuName settings, the <strong>Accepted URL</strong> must be <code>https://watchbuy-ko4chrlv.manus.space/api/ebay/callback</code>. If that RuName is used by another app, create a separate redirect entry rather than breaking its callback.</p>
+          <div id="encryptionSetup">
+            <p>First-time setup: copy a new encryption key below, then paste it into the protected <strong>TOKEN_ENCRYPTION_KEY</strong> input card. Do not paste it in chat. Do not replace an existing key after seller connection.</p>
+            <button class="primary" id="copyEncryptionKey" type="button">Copy new encryption key</button>
+            <span class="form-status" id="encryptionStatus" role="status"></span>
+          </div>
+          <button class="primary" id="connectSeller" type="button">Connect eBay seller</button>
+        </div>
+        <div class="control-card">
+          <div class="eyebrow">EXPIRY SWEEPER</div><h2>Schedule binding</h2>
+          <p>Bind the authenticated platform schedule task UID created in the dashboard or CLI. The callback verifies task identity; this form cannot supply a body ID.</p>
+          <label class="field-label" for="scheduleTaskUid">Task UID</label><input id="scheduleTaskUid" type="text" autocomplete="off" placeholder="Schedule task UID">
+          <label class="check-label"><input id="scheduleEnabled" type="checkbox"> Enable this schedule binding</label>
+          <div class="inline-actions"><button class="primary" id="saveSchedule" type="button">Save schedule binding</button><span class="form-status" id="scheduleStatus" role="status"></span></div>
+        </div>
+      </section>
+
+      <section class="admin-section" aria-labelledby="checkoutOpsTitle">
+        <div class="section-heading"><div><div class="eyebrow">OPERATIONS</div><h2 id="checkoutOpsTitle">Checkouts and observed evidence</h2></div></div>
+        <div class="metrics" id="metrics"></div>
+        <p class="operational-note">Funnel events indicate interactions, not purchases. Only verified eBay sale/order evidence is counted as a sale; a public listing cannot attribute a sale to a specific visitor.</p>
+        <div class="checkout-table-wrap"><table><thead><tr><th>Checkout</th><th>State</th><th>Listing / expiry</th><th>Evidence / exception</th></tr></thead><tbody id="checkoutsTable"></tbody></table></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>Owner controls require the server-configured ADMIN_OPEN_ID and a protected session.</span><span><a href="index.html">Return to public archive</a></span></footer>
+  <script src="commerce-config.js?v=20261028"></script>
+  <script src="admin.js?v=20261028-owner-setup"></script>
+</body>
+</html>

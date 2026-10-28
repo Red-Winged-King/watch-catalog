@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>G-SHOCK Archive</title>
+  <link rel="stylesheet" href="styles.css?v=20261028-commerce" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="G-SHOCK private archive home"><span class="brand-mark">G</span><span><b>G-SHOCK</b><small>PRIVATE ARCHIVE</small></span></a>
+    <nav aria-label="Archive navigation">
+      <button class="ghost" id="browseBtn" type="button">Catalog</button>
+      <a class="ghost linkbtn" href="decoder.html">Decoder</a>
+      <button class="bag-btn" id="bagBtn" type="button" aria-expanded="false" aria-controls="bagDrawer"><span>Bag</span><b id="bagCount">0</b></button>
+    </nav>
+  </header>
+
+  <main id="mainContent">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">CURATED G-SHOCK CATALOG</div>
+        <h1>Browse the archive.<br><em>Inspect every detail.</em></h1>
+        <p>Browse G-SHOCK models and covers, inspect the original archive imagery, and save a selection. Purchase availability appears only when an exact item has been verified.</p>
+        <button class="primary" id="enterCatalog" type="button">Explore collection</button>
+      </div>
+      <div class="hero-panel" aria-label="Archive facts">
+        <div class="hero-card"><span>592</span><small>catalog entries</small></div>
+        <div class="hero-card"><span>18</span><small>source pages</small></div>
+        <div class="hero-card"><span>∞</span><small>zoom detail</small></div>
+      </div>
+    </section>
+
+    <section class="catalog-shell" id="catalog" aria-labelledby="catalogTitle">
+      <div class="catalog-head">
+        <div><div class="eyebrow">THE ARCHIVE</div><h2 id="catalogTitle">Catalog</h2></div>
+        <div class="controls">
+          <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search item #, model, catalog…" autocomplete="off"></label>
+          <select id="sort" aria-label="Sort catalog"><option value="source">Catalog order</option><option value="model">Model A–Z</option><option value="page">Source page</option></select>
+        </div>
+      </div>
+      <div class="commerce-notice" id="commerceNotice" role="status" aria-live="polite" hidden></div>
+      <div class="chips" id="chips" aria-label="Catalog categories"></div>
+      <div class="result-row"><span id="resultCount">Loading archive…</span><button class="text-btn" id="clearFilters" type="button">Clear filters</button></div>
+      <div class="catalog-state" id="catalogState" role="status" aria-live="polite"></div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="bagDrawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="bagTitle" tabindex="-1">
+    <div class="drawer-head"><div><small>PRIVATE SELECTION</small><h3 id="bagTitle">Your bag</h3></div><button class="iconbtn" id="closeBag" type="button" aria-label="Close bag">×</button></div>
+    <div class="checkout-notice" id="checkoutNotice" role="status" aria-live="polite" hidden></div>
+    <div class="bag-list" id="bagList"></div>
+    <div class="bag-empty" id="bagEmpty"><b>Your bag is empty.</b><span>Add archive items to retain a local selection.</span></div>
+    <div class="drawer-footer" id="drawerFooter">
+      <div class="quote-summary" id="quoteSummary" aria-live="polite"></div>
+      <p class="shipping-disclosure">Delivery is currently limited to the United States. eBay confirms delivery eligibility, tax and payment during checkout.</p>
+      <button class="primary checkout-action" id="continueCheckout" type="button" disabled>Continue to eBay</button>
+      <p class="checkout-help" id="checkoutHelp">A verified quote is required before an eBay handoff. Your bag remains saved on this device.</p>
+      <details class="bag-code-wrap" id="bagCodeWrap">
+        <summary>Optional BAG1 selection code</summary>
+        <label for="bagCode">Portable selection code</label>
+        <textarea id="bagCode" readonly aria-label="BAG1 selection code"></textarea>
+        <div class="code-actions"><button class="secondary small" id="copyCode" type="button">Copy code</button><a class="secondary small" href="decoder.html">Open decoder</a></div>
+        <p class="bag-code-help">This code stores archive SKU and quantity only. It is not a quote or payment authorization.</p>
+      </details>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+  <div class="modal" id="zoomModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="zoomTitle" tabindex="-1">
+    <button class="modal-close" id="closeModal" type="button" aria-label="Close image viewer">×</button>
+    <div class="zoom-stage" id="zoomStage">
+      <div class="zoom-canvas" id="zoomCanvas"><img id="zoomImg" alt="Catalog detail"></div>
+      <span class="zoom-terminal" id="zoomTerminal" hidden>Image unavailable</span>
+    </div>
+    <div class="modal-info">
+      <div><small id="zoomMeta"></small><h3 id="zoomTitle"></h3><p id="zoomSub"></p></div>
+      <div class="modal-actions"><button class="secondary" id="zoomOut" type="button" aria-label="Zoom out">−</button><span id="zoomPct">100%</span><button class="secondary" id="zoomIn" type="button" aria-label="Zoom in">+</button><button class="primary" id="modalAdd" type="button">Add to bag</button></div>
+    </div>
+  </div>
+
+  <footer class="site-footer"><span>Archive imagery and catalog references are preserved for browsing.</span><span>Availability is verified server-side. <a href="https://watchbuy-ko4chrlv.manus.space/admin.html">Owner operations</a></span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script src="commerce-config.js?v=20261028"></script>
+  <script src="app.js?v=20261028-commerce"></script>
+</body>
+</html>

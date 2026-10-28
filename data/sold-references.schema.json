@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SoldReference import array",
+  "description": "Schema reference only. Submit a JSON array of actual eBay Product Research records to the protected import endpoint. This file contains no sold prices or reference records.",
+  "type": "array",
+  "examples": [],
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["sku", "model", "variant", "condition", "currency", "marketplaceId", "averageSoldCents", "sampleSize", "windowStart", "windowEnd", "checkedAt", "source", "sourceUrl", "priceBasis", "comparableConfirmed", "excludesPartsAndLots"],
+    "properties": {
+      "sku": {"type": "string", "description": "Must match a confirmed imported product and existing catalog SKU."},
+      "model": {"type": "string", "description": "Exact model."},
+      "variant": {"type": "string", "description": "Exact variant."},
+      "condition": {"enum": ["NEW", "USED_EXCELLENT", "USED_GOOD"]},
+      "currency": {"const": "USD"},
+      "marketplaceId": {"const": "EBAY_US"},
+      "averageSoldCents": {"type": "integer", "minimum": 1},
+      "sampleSize": {"type": "integer", "minimum": 1},
+      "windowStart": {"type": "string", "format": "date-time"},
+      "windowEnd": {"type": "string", "format": "date-time"},
+      "checkedAt": {"type": "string", "format": "date-time"},
+      "source": {"const": "EBAY_PRODUCT_RESEARCH"},
+      "sourceUrl": {"type": "string", "format": "uri"},
+      "priceBasis": {"const": "ITEM_ONLY"},
+      "comparableConfirmed": {"type": "boolean"},
+      "excludesPartsAndLots": {"type": "boolean"}
+    }
+  }
+}
